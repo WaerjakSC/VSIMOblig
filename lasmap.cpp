@@ -34,11 +34,7 @@ LasMap::LasMap()
 //    mVertices.push_back(v);
 
     //printSomePoints();
-    readFile("../VSIMOblig/LASdata/fuck.txt");
-//    readFile("../VSIMOblig/LASdata/fuck2.txt");
-//    readFile("../VSIMOblig/LASdata/fuck3.txt");
-//    readFile("../VSIMOblig/LASdata/fuck4.txt");
-//    readFile("../VSIMOblig/LASdata/fuck5.txt");
+    readFile("../VSIMOblig/LASdata/fjell.txt");
 //    readFile("../VSIMOblig/LASdata/33-1-497-327-20.txt");
     normalizePoints();
     addAllPointsToVertices();
@@ -78,7 +74,7 @@ void LasMap::init()
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (GLvoid *)(6 * sizeof(GLfloat)));
     glEnableVertexAttribArray(2);
 
-    glPointSize(5.f);
+    glPointSize(2.f);
 
     glBindVertexArray(0);
 }
@@ -100,21 +96,21 @@ void LasMap::printSomePoints()
 void LasMap::addAllPointsToVertices()
 {
     mVertices.clear();
-//    for (auto point : points)
-//    {
-//            Vertex v{};
-//            v.set_xyz(point.x, point.y, point.z);
-//            v.set_rgb(point.x/scaleFactor, point.z/scaleFactor, 0.5);
-//            v.set_uv(0, 0);
-//            mVertices.push_back(v);
-//    }
+    for (auto point : points)
+    {
+            Vertex v{};
+            v.set_xyz(point.x, point.y, point.z);
+            v.set_rgb(point.x/scaleFactor, point.z/scaleFactor, 0.5);
+            v.set_uv(0, 0);
+            mVertices.push_back(v);
+    }
 
     //glPointSize(5);
     planePoints = mapToGrid(points, 10, 10, gsl::Vector3D(xMin, yMin, zMin), gsl::Vector3D(xMax, yMax, zMax));
     for (auto point : planePoints)
     {
             Vertex v{};
-            v.set_xyz(point.x, point.y, point.z);
+            v.set_xyz(point.x, point.y+0.1f, point.z);
             v.set_rgb(0, 1, 0);
             v.set_uv(0, 0);
             mVertices.push_back(v);
@@ -349,9 +345,9 @@ void LasMap::readFile(std::string filename)
         }
         inn.close();
 
-        unsigned long long N = points.size() / 4;
+        unsigned long long N = points.size() / 8;
         for (unsigned long long i = 0; i < N; ++i)
-            points.at(i) = points.at(i * 4);
+            points.at(i) = points.at(i * 8);
         points.resize(N);
 
         //qDebug() << "TriangleSurface file read: " << QString::fromStdString(filename);
