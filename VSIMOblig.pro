@@ -18,8 +18,10 @@ SOURCES += main.cpp \
     GSL/vector3d.cpp \
     GSL/vector4d.cpp \
     GSL/gsl_math.cpp \
+    bsplinecurve.cpp \
     collision.cpp \
     lasmap.cpp \
+    npc.cpp \
     renderwindow.cpp \
     rollingstone.cpp \
     shader.cpp \
@@ -47,8 +49,10 @@ HEADERS += \
     GSL/gsl_math.h \
     GSL/math_constants.h \
     LASLoader.h \
+    bsplinecurve.h \
     collision.h \
     lasmap.h \
+    npc.h \
     renderwindow.h \
     rollingstone.h \
     shader.h \
