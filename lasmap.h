@@ -8,6 +8,7 @@ class LasMap : public VisualObject
 {
 public:
     LasMap();
+    LasMap(int testNum);
     ~LasMap() override;
 
     virtual void init() override;
@@ -16,6 +17,7 @@ public:
     gsl::LASLoader lasloader{"../VSIMOblig/LASdata/33-1-497-327-20.las"};
     void printSomePoints();
     void addAllPointsToVertices();
+    void addOnlyPointsToVertices();
 
     static float length(const gsl::Vector3D& a, const gsl::Vector3D& b);
     void normalizePoints();
@@ -24,9 +26,11 @@ public:
     void constructSurface(unsigned int xGridSize, unsigned int zGridSize);
     void readFile();
     void readFile(std::string filename);
+    void getPointsOnly();
     std::vector<gsl::Vector3D> points;
     std::vector<gsl::Vector3D> planePoints;
     //"../VSIMOblig/LASdata/33-1-497-327-20.las"
+    bool drawPoints{false};
 
     std::vector<gsl::Vector3D> getTrianglePoints();
 

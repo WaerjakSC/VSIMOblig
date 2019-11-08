@@ -116,7 +116,11 @@ void RenderWindow::init() {
 
     pawn = new RollingStone;
     mVisualObjects.push_back(pawn);
-    pawn->move(vec3(1.2, 5.5, 1));
+    pawn->move(vec3(1.2f, 5.5, 1));
+
+    LasMap *mTestMap2 = new LasMap{1};
+    //mTestMap->scale(10);
+    mVisualObjects.push_back(mTestMap2);
 
 
 //    gsl::LASLoader *mTestMap = new gsl::LASLoader("../VSIMOblig/LASdata/33-1-497-327-20.las"); ////Get LASLoader to read correct constructor
@@ -185,14 +189,18 @@ void RenderWindow::render() {
     //to clear the screen for each redraw
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    for (VisualObject *object : mVisualObjects) {
-        if (object->getUseTextures()) {
+    for (VisualObject *object : mVisualObjects)
+    {
+        if (object->getUseTextures())
+        {
             glUseProgram(mShaderProgram[1]->getProgram());
             glUniformMatrix4fv(vMatrixUniform1, 1, GL_TRUE, mCurrentCamera->mViewMatrix.constData());
             glUniformMatrix4fv(pMatrixUniform1, 1, GL_TRUE, mCurrentCamera->mProjectionMatrix.constData());
             glUniformMatrix4fv(mMatrixUniform1, 1, GL_TRUE, object->getModelMatrix().constData());
             glUniform1i(mTextureUniform, 1);
-        } else {
+        }
+        else
+        {
             glUseProgram(mShaderProgram[0]->getProgram());
             glUniformMatrix4fv(vMatrixUniform0, 1, GL_TRUE, mCurrentCamera->mViewMatrix.constData());
             glUniformMatrix4fv(pMatrixUniform0, 1, GL_TRUE, mCurrentCamera->mProjectionMatrix.constData());

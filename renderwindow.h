@@ -37,6 +37,7 @@ public:
     void checkForGLerrors();
 
     bool detectPlayer();
+    std::vector<VisualObject *> mVisualObjects;
 private slots:
     void render();
 
@@ -77,7 +78,7 @@ private:
     GLint pMatrixUniform1{-1};
     GLint mTextureUniform{-1};
 
-    std::vector<VisualObject *> mVisualObjects;
+
 
     Camera *mCurrentCamera{nullptr};
 

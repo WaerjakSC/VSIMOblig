@@ -79,3 +79,27 @@ void MainWindow::on_pushButton_clicked()
 {
     mRenderWindow->toggleWireframe();
 }
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    if (mRenderWindow->mVisualObjects[3]->viewObject)
+    {
+        mRenderWindow->mVisualObjects[3]->viewObject = false;
+    }
+    else
+    {
+        mRenderWindow->mVisualObjects[3]->viewObject = true;
+    }
+}
+
+void MainWindow::on_pushButton_3_clicked()
+{
+    if (mRenderWindow->mVisualObjects[1]->viewObject)
+    {
+        mRenderWindow->mVisualObjects[1]->viewObject = false;
+    }
+    else
+    {
+        mRenderWindow->mVisualObjects[1]->viewObject = true;
+    }
+}

@@ -30,6 +30,7 @@ public:
     void rotate(gsl::Vector3D vec);
 
     gsl::Vector3D getPosition();
+    bool viewObject{true};
 
 protected:
     std::vector<Vertex> mVertices;

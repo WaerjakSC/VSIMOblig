@@ -33,14 +33,20 @@ LasMap::LasMap()
 //    v.set_uv(0, 1);
 //    mVertices.push_back(v);
 
-    //printSomePoints();
+
+    //getPointsOnly();
+
     readFile("../VSIMOblig/LASdata/fjell.txt");
-//    readFile("../VSIMOblig/LASdata/33-1-497-327-20.txt");
     normalizePoints();
     addAllPointsToVertices();
-    constructSurface(10, 10);
-    //centerMap();
+    constructSurface(5, 5);
 
+}
+
+LasMap::LasMap(int testNum)
+{
+    getPointsOnly();
+    testNum++;
 }
 
 LasMap::~LasMap()
@@ -81,8 +87,19 @@ void LasMap::init()
 
 void LasMap::draw()
 {
-    glBindVertexArray(mVAO);
-    glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+    if (viewObject)
+    {
+        if (!drawPoints)
+        {
+            glBindVertexArray(mVAO);
+            glDrawArrays(GL_TRIANGLES, 0, mVertices.size());
+        }
+        else
+        {
+            glBindVertexArray(mVAO);
+            glDrawArrays(GL_POINTS, 0, mVertices.size());
+        }
+    }
 }
 
 void LasMap::printSomePoints()
@@ -116,6 +133,20 @@ void LasMap::addAllPointsToVertices()
             mVertices.push_back(v);
     }
     std::cout << planePoints.size();
+}
+
+void LasMap::addOnlyPointsToVertices()
+{
+    mVertices.clear();
+    for (auto point : points)
+    {
+            Vertex v{};
+            v.set_xyz(point.x, point.y, point.z);
+            v.set_rgb(point.x/scaleFactor, point.z/scaleFactor, 0.5);
+            v.set_uv(0, 0);
+            mVertices.push_back(v);
+    }
+
 }
 
 void LasMap::normalizePoints()
@@ -370,6 +401,15 @@ void LasMap::readFile(std::string filename)
 
 
     //    std::cout << std::setprecision(10) << points.size() << "\n";
+}
+
+void LasMap::getPointsOnly()
+{
+    mVertices.clear();
+    readFile("../VSIMOblig/LASdata/fjell.txt");
+    normalizePoints();
+    addOnlyPointsToVertices();
+    drawPoints = true;
 }
 
 std::vector<gsl::Vector3D> LasMap::getTrianglePoints()
